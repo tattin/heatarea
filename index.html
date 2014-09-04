@@ -7,17 +7,24 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script>
 $(function(){
-    $menu = $("#menu");
+    var current_area,
+        click_area;
     $("path")
     .on("mouseover", function(){
+        current_area = $(this).attr("id");
         $(this).css({
             "fill": "gray",
         });
     })
     .on("mouseout", function(){
-        $(this).css("fill", "transparent");
+        if(current_area != click_area
+        && $("#menu").css("display") != "none"){
+            $(this).css("fill", "transparent");
+        }
     })
     .on("click", function(e){
+        $("path[id=" + click_area + "]").css("fill", "transparent");
+        click_area = $(this).attr("id");
         $("#menu").css({
             "display": "",
             "top": e.pageY,
