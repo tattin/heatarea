@@ -7,6 +7,16 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script>
 $(function(){
+    $.getJSON("./data.json", function(data){
+        var max = 0;
+        for(i in data){
+            max = (data[i] > max) ? data[i] : max;
+        }
+        for(i in data){
+            var rate = 100 - data[i] / max * 100;
+            $("#" + i).css("fill", "rgb(100%, " + rate + "%, " + rate + "%)");
+        }
+    });
     var current_area,
         click_area;
     $("path")
@@ -17,8 +27,8 @@ $(function(){
         });
     })
     .on("mouseout", function(){
-        if(current_area != click_area
-        && $("#menu").css("display") != "none"){
+        if($("#menu").css("display") == "none" ||
+          (current_area != click_area && $("#menu").css("display") != "none")){
             $(this).css("fill", "transparent");
         }
     })
